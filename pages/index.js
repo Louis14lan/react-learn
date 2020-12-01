@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 // import {ToolBar} from './ContextComponent'
 
-import {Component, createContext} from 'react'
+import {Component, createContext, Profiler} from 'react'
 const ThemeContext = createContext('light')
 
 export default class Home extends Component {
@@ -17,6 +17,9 @@ export default class Home extends Component {
       counts: this.state.counts+1
     })
   }
+  callbak(){
+    console.log(arguments)
+  }
   render(){
     return (
       <div className={styles.container}>
@@ -30,9 +33,11 @@ export default class Home extends Component {
         </div>
         <main>
           <ThemeContext.Provider value={{'theme':'dark','counts':this.state.counts}}>
-            <ToolBar>
-              haha
-            </ToolBar>
+            <Profiler id='tooBar' onRender={this.callbak}>
+              <ToolBar>
+                haha
+              </ToolBar>
+            </Profiler>
             <ThemeContext.Consumer>
               {value=>ThemedButton1(value)}
             </ThemeContext.Consumer>
@@ -45,8 +50,21 @@ export default class Home extends Component {
 }
 
 class ToolBar extends Component{
+  constructor(){
+    super();
+    this.state={
+      cc:0
+    }
+  }
+  add = ()=>{
+    this.setState({
+      cc:this.state.cc+1
+    })
+  }
   render(){
       return <div>
+          <button onClick={this.add}>toobar+1</button>
+          <span>{this.state.cc}</span>
           <ThemedButton />
           <em>{this.props.children}</em>
       </div>
