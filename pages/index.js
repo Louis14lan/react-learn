@@ -1,65 +1,69 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+// import {ToolBar} from './ContextComponent'
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+import {Component, createContext} from 'react'
+const ThemeContext = createContext('light')
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+export default class Home extends Component {
+  constructor(){
+    super();
+    this.state = {
+      counts: 0
+    }
+  }
+  add(){
+    this.setState({
+      counts: this.state.counts+1
+    })
+  }
+  render(){
+    return (
+      <div className={styles.container}>
+        <Head>
+          <title>Create Next App</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <div>
+          <button onClick={this.add.bind(this)}>+</button>
+          <span>{this.state.counts}</span>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+        <main>
+          <ThemeContext.Provider value={{'theme':'dark','counts':this.state.counts}}>
+            <ToolBar>
+              haha
+            </ToolBar>
+            <ThemeContext.Consumer>
+              {value=>ThemedButton1(value)}
+            </ThemeContext.Consumer>
+          </ThemeContext.Provider>
+          
+        </main>
+      </div>
+    )
+  }
 }
+
+class ToolBar extends Component{
+  render(){
+      return <div>
+          <ThemedButton />
+          <em>{this.props.children}</em>
+      </div>
+  }
+}
+
+
+function ThemedButton1(props){
+  console.log(props)
+  return <button theme={props.theme}>{props.theme}1: {props.counts}</button>
+}
+// ThemedButton.contextType = ThemeContext;
+
+class ThemedButton extends Component{
+  // static contextType = ThemeContext;
+  render(){
+    return <button theme={this.context.theme}>{this.context.counts}</button>
+  }
+}
+ThemedButton.contextType = ThemeContext;
