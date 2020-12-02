@@ -1,4 +1,5 @@
 import {RefComponent} from './RefComponent'
+import {HookExample} from './HookExample'
 
 import {Component, createContext, Profiler} from 'react'
 const ThemeContext = createContext('light')
@@ -7,7 +8,8 @@ export default class Home extends Component {
   constructor(){
     super();
     this.state = {
-      counts: 0
+      counts: 0,
+      color:'red'
     }
   }
   add(){
@@ -23,7 +25,8 @@ export default class Home extends Component {
       <div>
         <div>
           <button onClick={this.add.bind(this)}>+</button>
-          <span>{this.state.counts}</span>
+          <span>counts:{this.state.counts}</span>
+          <span>color:{this.state.color}</span>
         </div>
         <div>
           <ThemeContext.Provider value={{'theme':'dark','counts':this.state.counts}}>
@@ -37,6 +40,7 @@ export default class Home extends Component {
             </ThemeContext.Consumer>
           </ThemeContext.Provider>
           <RefComponent></RefComponent>
+          <HookExample></HookExample>
         </div>
       </div>
     )
