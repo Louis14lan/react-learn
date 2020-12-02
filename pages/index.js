@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-// import {ToolBar} from './ContextComponent'
+import {RefComponent} from './RefComponent'
 
 import {Component, createContext, Profiler} from 'react'
 const ThemeContext = createContext('light')
@@ -42,7 +42,7 @@ export default class Home extends Component {
               {value=>ThemedButton1(value)}
             </ThemeContext.Consumer>
           </ThemeContext.Provider>
-          
+          <RefComponent></RefComponent>
         </main>
       </div>
     )
