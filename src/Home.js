@@ -1,8 +1,9 @@
-import {RefComponent} from './RefComponent'
-import {HookExample} from './HookExample'
+import {RefComponent} from './examples/RefComponent'
+import {HookExample} from './examples/HookExample'
+import FluxExample from './examples/FluxExample';
 
 import {Component, createContext, Profiler} from 'react'
-import FluxExample from './FluxExample';
+
 const ThemeContext = createContext('light')
 
 export default class Home extends Component {
