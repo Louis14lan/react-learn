@@ -2,6 +2,7 @@ import {RefComponent} from './RefComponent'
 import {HookExample} from './HookExample'
 
 import {Component, createContext, Profiler} from 'react'
+import FluxExample from './FluxExample';
 const ThemeContext = createContext('light')
 
 export default class Home extends Component {
@@ -41,6 +42,7 @@ export default class Home extends Component {
           </ThemeContext.Provider>
           <RefComponent></RefComponent>
           <HookExample></HookExample>
+          <FluxExample></FluxExample>
         </div>
       </div>
     )
